@@ -8,12 +8,15 @@ module AlbumArtScraper
     @@DISC_URL = 'http://www.discogs.com'
     @@USER_AGENT = { 'User-Agent' => 'firefox' }
 
-    # takes an artist name, searches discogs, returns array of Magick::Images if successful
+    # takes an artist name, searches discogs, returns array of Magick::Images if successful, otherwise returns nil
     # singles is a boolean that determines whether or not to include art from single releases
     def self.scrape_images(artist, singles)
 
       # search discogs for artist
       search_results = search(artist)
+
+      # if no results, return nil
+      if not search_results then return nil end
 
       # handle case where first result is not the right one
       art_urls = Array.new
@@ -22,6 +25,9 @@ module AlbumArtScraper
         # stop looping at the first url that has art
         if art_urls then break end
       end
+
+      # if no art could be found, return nil
+      if not art_urls then return nil end
       
       # populate array of Magick::Images
       images = Array.new
