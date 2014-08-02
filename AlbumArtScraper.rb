@@ -15,8 +15,13 @@ module AlbumArtScraper
       # search discogs for artist
       search_results = search(artist)
 
-      # results are ordered by relevance ; first one should be the one we want
-      art_urls = get_art_urls(search_results.first, singles)
+      # handle case where first result is not the right one
+      art_urls = Array.new
+      search_results.each do |url|
+        art_urls = get_art_urls(url, singles)
+        # stop looping at the first url that has art
+        if art_urls then break end
+      end
       
       # populate array of Magick::Images
       images = Array.new
