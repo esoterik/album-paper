@@ -16,7 +16,7 @@ module AlbumArtScraper
       search_results = search(artist)
 
       # results are ordered by relevance ; first one should be the one we want
-      art_urls = get_art_urls(search_results.first)
+      art_urls = get_art_urls(search_results.first, singles)
       
       # populate array of Magick::Images
       images = Array.new
