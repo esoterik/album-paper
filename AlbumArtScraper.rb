@@ -104,8 +104,8 @@ module AlbumArtScraper
       @tile_x_size = @collage_items.first.width
       @tile_y_size = @collage_items.first.height
       # number of rows / columns of tiles in wallpaper ; add one to ensure entire image is covered
-      @num_rows = ( rows / @tile_x_size ) + 1
-      @num_cols = ( cols / @tile_y_size ) + 1
+      @num_rows = ( width / @tile_x_size ) + 1
+      @num_cols = ( height / @tile_y_size ) + 1
     end
 
     # generates a  random wallpaper from the tiles
