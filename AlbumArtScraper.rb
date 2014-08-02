@@ -5,6 +5,7 @@ require 'RMagick'
 
 module AlbumArtScraper
   class Discogs
+    @@DISC_URL = 'http://www.discogs.com'
 
     # takes an artist name, searches discogs, returns array of Magick::Images if successful
     # singles is a boolean that determines whether or not to include art from single releases
@@ -25,6 +26,21 @@ module AlbumArtScraper
 
     # searches discogs for an artist's page, returns array of partial urls 
     def self.search(artist)
+      # replace spaces with '+'s for url
+      artist = artist.gsub(/[\s]/, '+')
+
+      # search discogs
+      page = Nokogiri::HTML(open("#{@@DISC_URL}/search/?q=#{artist}&advanced1&type=artist"))
+
+      # get links out of page
+      results = page.css('a').to_a.collect do |a|
+        if a.has_attribute? 'class' 
+          a.get_attribute('href') if a.get_attribute('class') == "search_result_title rollover_link"
+        end
+      end
+
+      
+      results
     end
 
     # returns a list of album 
