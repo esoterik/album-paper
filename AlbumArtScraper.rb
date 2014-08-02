@@ -54,6 +54,14 @@ module AlbumArtScraper
       # 'R-90' is in all discog art urls; collect urls that have it
       img_urls = imgs.to_a.collect { |img| if img.get_attribute('src').include? 'R-90' then img.get_attribute('src') end }
 
+      # if we want singles, repeat process then combine
+      if singles
+        page = Nokogiri::HTML(open("#{@DiscUrl}#{artist_url}?sort=year%2Casc&limit=500&subtype=Singles-EPs&type=Releases"))
+        imgs = page.css 'img'
+        singles_urls = imgs.to_a.collect { |img| if img.get_attribute('src').include? 'R-90' then img.get_attribute('src') end }
+        img_urls += singles_urls
+      end
+
       img_urls
     end
   end
