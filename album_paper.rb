@@ -10,7 +10,8 @@ post '/gen' do
 end
 
 get '/gen/:artist/:width/:height/:singles' do
-  images = AlbumArtScraper::Discogs::scrape_images(params[:artist], params[:singles])
+  singles =  ( params[:singles] == "on" )
+  images = AlbumArtScraper::Discogs::scrape_images(params[:artist], singles)
   if images
     gen = AlbumArtScraper::WallpaperGen.new(params[:width].to_i, params[:height].to_i, images)
     gen.generate
