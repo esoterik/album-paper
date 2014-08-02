@@ -67,7 +67,7 @@ module AlbumArtScraper
         img_urls += singles_urls
       end
 
-      @img_urls.delete(nil)
+      img_urls.delete(nil)
 
       img_urls
     end
