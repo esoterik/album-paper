@@ -51,7 +51,11 @@ module AlbumArtScraper
     # returns a list of album 
     # singles is a boolean that determines whether or not to include art from single releases
     def self.get_art_urls(artist_url, singles)
-      page = Nokogiri::HTML(open("#{@@DISC_URL}#{artist_url}?sort=year%2Casc&limit=500&subtype=Albums&type=Releases", @@USER_AGENT))
+      begin
+        page = Nokogiri::HTML(open("#{@@DISC_URL}#{artist_url}?sort=year%2Casc&limit=500&subtype=Albums&type=Releases", @@USER_AGENT))
+      rescue OpenURI::HTTPError
+        return nil
+      end
 
       # find img tags
       imgs = page.css('img')
@@ -61,10 +65,13 @@ module AlbumArtScraper
 
       # if we want singles, repeat process then combine
       if singles
-        page = Nokogiri::HTML(open("#{@DiscUrl}#{artist_url}?sort=year%2Casc&limit=500&subtype=Singles-EPs&type=Releases", @@USER_AGENT))
-        imgs = page.css 'img'
-        singles_urls = imgs.to_a.collect { |img| if img.get_attribute('src').include? 'R-90' then img.get_attribute('src') end }
-        img_urls += singles_urls
+        begin
+          page = Nokogiri::HTML(open("#{@DiscUrl}#{artist_url}?sort=year%2Casc&limit=500&subtype=Singles-EPs&type=Releases", @@USER_AGENT))
+          imgs = page.css 'img'
+          singles_urls = imgs.to_a.collect { |img| if img.get_attribute('src').include? 'R-90' then img.get_attribute('src') end }
+          img_urls += singles_urls
+        rescue OpenURI::HTTPError
+        end
       end
 
       img_urls.delete(nil)
