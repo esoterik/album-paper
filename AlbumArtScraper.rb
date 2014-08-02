@@ -46,6 +46,15 @@ module AlbumArtScraper
     # returns a list of album 
     # singles is a boolean that determines whether or not to include art from single releases
     def self.get_art_urls(artist_url, singles)
+      page = Nokogiri::HTML(open("#{@@DISC_URL}#{artist_url}?sort=year%2Casc&limit=500&subtype=Albums&type=Releases"))
+
+      # find img tags
+      imgs = page.css('img')
+
+      # 'R-90' is in all discog art urls; collect urls that have it
+      img_urls = imgs.to_a.collect { |img| if img.get_attribute('src').include? 'R-90' then img.get_attribute('src') end }
+
+      img_urls
     end
   end
 end
