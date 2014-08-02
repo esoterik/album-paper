@@ -108,7 +108,13 @@ module AlbumArtScraper
       @num_cols = ( cols / @tile_y_size ) + 1
     end
 
+    # generates a  random wallpaper from the tiles
     def generate
+      @num_rows.times do |r|
+        @num_cols.times do |c|
+          @wallpaper.composite!(@collage_items.sample, (r - 1) * @tile_x_size, (c - 1) * @tile_y_size, Magick::OverCompositeOp)
+        end
+      end
     end
 
     def write
