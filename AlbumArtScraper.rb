@@ -66,7 +66,7 @@ module AlbumArtScraper
       # if we want singles, repeat process then combine
       if singles
         begin
-          page = Nokogiri::HTML(open("#{@DiscUrl}#{artist_url}?sort=year%2Casc&limit=500&subtype=Singles-EPs&type=Releases", @@USER_AGENT))
+          page = Nokogiri::HTML(open("#{@@DISC_URL}#{artist_url}?sort=year%2Casc&limit=500&subtype=Singles-EPs&type=Releases", @@USER_AGENT))
           imgs = page.css 'img'
           singles_urls = imgs.to_a.collect { |img| if img.get_attribute('src').include? 'R-90' then img.get_attribute('src') end }
           img_urls += singles_urls
