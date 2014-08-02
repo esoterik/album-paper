@@ -116,9 +116,7 @@ module AlbumArtScraper
           @wallpaper.composite!(@collage_items.sample, (r - 1) * @tile_x_size, (c - 1) * @tile_y_size, Magick::OverCompositeOp)
         end
       end
-    end
-
-    def write
+      @wallpaper.format = 'png'
     end
   end
 end
