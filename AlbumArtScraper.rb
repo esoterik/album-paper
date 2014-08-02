@@ -31,7 +31,12 @@ module AlbumArtScraper
       
       # populate array of Magick::Images
       images = Array.new
-      art_urls.each { |url| images.push(Magick::Image::read(url).first) }
+      art_urls.each do |url|
+        begin
+          images.push(Magick::Image::read(url).first)
+        rescue
+        end
+      end
 
       images
     end
