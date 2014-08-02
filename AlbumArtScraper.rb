@@ -95,6 +95,17 @@ module AlbumArtScraper
       img_urls
     end
   end
+
+  class WallpaperGen
+    def initialize(width, height, images)
+    end
+
+    def generate
+    end
+
+    def write
+    end
+  end
 end
 
 
