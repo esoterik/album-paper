@@ -97,12 +97,13 @@ module AlbumArtScraper
   end
 
   class WallpaperGen
+    attr_reader :wallpaper
     # takes desired resolution, array of images
     def initialize(width, height, images)
       @wallpaper = Magick::Image.new(width, height)
       @collage_items = images
-      @tile_x_size = @collage_items.first.width
-      @tile_y_size = @collage_items.first.height
+      @tile_x_size = @collage_items.first.rows
+      @tile_y_size = @collage_items.first.columns
       # number of rows / columns of tiles in wallpaper ; add one to ensure entire image is covered
       @num_rows = ( width / @tile_x_size ) + 1
       @num_cols = ( height / @tile_y_size ) + 1
