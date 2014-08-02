@@ -43,6 +43,7 @@ module AlbumArtScraper
         end
       end
 
+      results.delete(nil)
       
       results
     end
@@ -65,6 +66,8 @@ module AlbumArtScraper
         singles_urls = imgs.to_a.collect { |img| if img.get_attribute('src').include? 'R-90' then img.get_attribute('src') end }
         img_urls += singles_urls
       end
+
+      @img_urls.delete(nil)
 
       img_urls
     end
