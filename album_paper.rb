@@ -13,7 +13,8 @@ post '/gen' do
   erb :gen
 end
 
-get '/gen/:artist/:width/:height/:singles' do
+get '/gen/:artist/:width/:height/?:singles?' do
+  params[:singles] ||= "off"
   singles =  ( params[:singles] == "on" )
   images = AlbumArtScraper::Discogs::scrape_images(params[:artist].gsub('_', ' '), singles)
   if images
