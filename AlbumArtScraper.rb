@@ -43,8 +43,8 @@ module AlbumArtScraper
 
     # searches discogs for an artist's page, returns array of partial urls 
     def self.search(artist)
-      # strip nonalphanumeric characters from artist name; leave spaces
-      artist = artist.gsub(/[^0-9a-z ]/, "")
+      # strip nonalphanumeric, nonunderscore characters from artist name; leave spaces
+      artist = artist.gsub(/[^0-9a-z_ ]/, "")
 
       # replace spaces with '+'s for url
       artist = artist.gsub(/[\s]/, '+')
