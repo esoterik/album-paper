@@ -1,6 +1,10 @@
 require 'sinatra'
 require './AlbumArtScraper'
 
+configure do
+  set :server, :puma
+end
+
 get '/' do
   erb :index
 end
